@@ -5,19 +5,19 @@ variable "client" {
 }
 
 variable "db_name" {
-  description = "Nome do banco de dados Postgres"
+  description = "Postgres"
   type        = string
   default     = "library_db"
 }
 
 variable "db_user" {
-  description = "Usuário mestre do banco de dados"
+  description = "databse user"
   type        = string
   default     = "admin"
 }
 
 variable "db_password" {
-  description = "Senha para o banco de dados (deve coincidir com a definida no seu .env)"
+  description = "password"
   type        = string
   sensitive   = true
   default     = "Admin123" 
