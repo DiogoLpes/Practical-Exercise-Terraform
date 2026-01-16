@@ -1,0 +1,22 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfvars
+!env.tfvars
+*.tfplan
+crash.log
+crash.*.log
+
+# Secrets
+*.secret
+terraform.tfvars.secret
+terraform.auto.tfvars.secret
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

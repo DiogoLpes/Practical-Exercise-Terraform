@@ -1,36 +1,36 @@
-variable "client" {
-  description = "Client's name"
-  type = string
-  default = "null"
-}
-
 variable "db_name" {
-  description = "Postgres"
+  description = "Nome da base de dados PostgreSQL"
   type        = string
   default     = "library_db"
 }
 
 variable "db_user" {
-  description = "databse user"
+  description = "Utilizador da base de dados"
   type        = string
   default     = "admin"
 }
 
 variable "db_password" {
-  description = "password"
+  description = "Password da base de dados (SENSÍVEL)"
   type        = string
   sensitive   = true
-  default     = "Admin123" 
+  default     = "Admin123"
 }
 
-variable "db_port" {
-  description = "Porta exposta do banco de dados"
-  type        = number
-  default     = 5432 
+variable "postgres_storage_size" {
+  description = "Tamanho do storage persistente do PostgreSQL"
+  type        = string
+  default     = "10Gi"
 }
 
-variable "app_port" {
-  description = "Porta exposta da aplicação Django"
+variable "app_image" {
+  description = "Docker image para a aplicação Django"
+  type        = string
+  default     = "python:3.12"
+}
+
+variable "app_replicas" {
+  description = "Número de réplicas para o deployment Django"
   type        = number
-  default     = 8000 
+  default     = 1
 }
