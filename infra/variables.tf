@@ -34,3 +34,16 @@ variable "app_replicas" {
   type        = number
   default     = 1
 }
+
+variable "auth_username" {
+  description = "Username para autenticação Basic Auth"
+  type        = string
+  default     = "admin"
+}
+
+variable "auth_password" {
+  description = "Password para autenticação Basic Auth"
+  type        = string
+  sensitive   = true
+  default     = "library123"
+}

@@ -200,7 +200,7 @@ resource "kubernetes_deployment_v1" "app" {
             }
           }
 
-          args = ["tail", "-f", "/dev/null"]
+          command = ["python", "manage.py", "runserver", "0.0.0.0:8000"]
         }
       }
     }
