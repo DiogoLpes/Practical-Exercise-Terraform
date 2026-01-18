@@ -6,10 +6,6 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 2.20.0"
     }
-    tls = {
-      source  = "hashicorp/tls"
-      version = ">= 4.0.0"
-    }
   }
 }
 
@@ -18,4 +14,3 @@ provider "kubernetes" {
   config_context = "minikube"
 }
 
-provider "tls" {}

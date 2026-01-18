@@ -200,7 +200,7 @@ resource "kubernetes_deployment_v1" "app" {
             }
           }
 
-          command = ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+          command = ["python", "django-app/manage.py", "runserver", "0.0.0.0:8000"]
         }
       }
     }
