@@ -51,6 +51,7 @@ migrate:
 
 init:
 	@echo "🔧 Initializing Terraform..."
+	minikube start || echo "Minikube already running"
 	terraform init
 
 validate:

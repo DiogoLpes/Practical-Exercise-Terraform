@@ -132,3 +132,38 @@ make test
 *   Borrowing logic & limits
 *   Admin CRUD operations
 *   Permission & Security checks
+
+
+🚀 How to Run the Terraform Project
+Follow these steps in order to build the application, provision the infrastructure, and configure the database.
+
+1. Prerequisites
+Ensure you have the following installed:
+
+Docker
+Minikube
+Terraform
+Kubectl
+
+1.  **Clone the repository**
+    ```bash
+    git clone <repository-url>
+    cd infra
+    ```
+
+2.  **Build the Docker Image**
+    ```bash
+    make build
+    ```
+
+3. **Provision Infrastructure**
+    ```bash
+    make init
+    make plan
+    make apply
+    make migrate
+    ```
+
+4 **Accessing the Application**
+    make port-forward
+       
