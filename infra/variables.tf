@@ -7,7 +7,7 @@ variable "db_name" {
 variable "db_user" {
   description = "Utilizador da base de dados"
   type        = string
-  default     = "admin"
+  default     = "postgres"
 }
 
 variable "db_password" {
@@ -38,7 +38,7 @@ variable "app_replicas" {
 variable "auth_username" {
   description = "Username para autenticação Basic Auth"
   type        = string
-  default     = "admin"
+  default     = "postgres"
 }
 
 variable "auth_password" {

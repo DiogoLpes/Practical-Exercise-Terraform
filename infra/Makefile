@@ -20,6 +20,35 @@ help:
 	@echo "  make k8s-info      - Show Kubernetes cluster info"
 	@echo ""
 
+
+
+IMAGE_NAME=library-app
+IMAGE_TAG=latest
+
+build:
+	@echo "🏗️ Building Docker image..."
+	docker build --no-cache -t $(IMAGE_NAME):$(IMAGE_TAG) -f ../ops/Dockerfile ..
+	@echo "🚚 Loading image into Minikube..."
+	minikube image load $(IMAGE_NAME):$(IMAGE_TAG)
+
+# Reinicia os pods para aplicar a imagem nova sem destruir o banco
+restart:
+	@echo "♻️ Restarting Django pods..."
+	kubectl rollout restart deployment app -n library-app
+
+# Executa as migrações automaticamente
+migrate:
+	@echo "🗄️ Running database migrations..."
+	@# Tenta encontrar o pod pela label 'app=django' ou 'app=app'
+	@POD_NAME=$$(kubectl get pods -n library-app -l app=django -o jsonpath='{.items[0].metadata.name}' 2>/dev/null || \
+	            kubectl get pods -n library-app -l app=app -o jsonpath='{.items[0].metadata.name}' 2>/dev/null); \
+	if [ -z "$$POD_NAME" ]; then \
+		echo "❌ Erro: Não encontrei nenhum pod do Django no namespace library-app."; \
+		exit 1; \
+	fi; \
+	echo "✅ Usando pod: $$POD_NAME"; \
+	kubectl exec -it $$POD_NAME -n library-app -- poetry run python django-app/manage.py migrate
+
 init:
 	@echo "🔧 Initializing Terraform..."
 	terraform init
@@ -43,6 +72,10 @@ apply:
 apply-plan:
 	@echo "🚀 Applying from saved plan..."
 	terraform apply app.plan
+
+port-forward:
+	@echo "🔌 Setting up port forwarding for Django app..."
+	kubectl port-forward -n library-app svc/app 8000:8000
 
 destroy:
 	@echo "💥 Destroying infrastructure..."

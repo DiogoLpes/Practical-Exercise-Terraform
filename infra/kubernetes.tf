@@ -42,7 +42,7 @@ resource "kubernetes_deployment_v1" "database" {
   wait_for_rollout = false
   
   metadata {
-    name      = "database"
+    name      = "database-svc"
     namespace = kubernetes_namespace_v1.library_ns.metadata[0].name
     labels = {
       app = "postgres"
@@ -122,7 +122,7 @@ resource "kubernetes_deployment_v1" "database" {
 # Serviço para o Postgres
 resource "kubernetes_service_v1" "database_svc" {
   metadata {
-    name      = "database"
+    name      = "database-svc"
     namespace = kubernetes_namespace_v1.library_ns.metadata[0].name
   }
   spec {
@@ -162,7 +162,8 @@ resource "kubernetes_deployment_v1" "app" {
       spec {
         container {
           name  = "django"
-          image = var.app_image
+          image = "library-app:latest"
+          image_pull_policy = "IfNotPresent"
           port {
             container_port = 8000
           }
@@ -181,7 +182,7 @@ resource "kubernetes_deployment_v1" "app" {
           }
           env {
             name  = "DATABASE_HOST"
-            value = "database"
+            value = kubernetes_service_v1.database_svc.metadata[0].name
           }
           env {
             name  = "DATABASE_PORT"
@@ -200,7 +201,7 @@ resource "kubernetes_deployment_v1" "app" {
             }
           }
 
-          command = ["python", "django-app/manage.py", "runserver", "0.0.0.0:8000"]
+          command = ["poetry", "run", "python", "django-app/manage.py", "runserver", "0.0.0.0:8000"]
         }
       }
     }

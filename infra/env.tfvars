@@ -1,3 +1,3 @@
 db_name     = "library_db"
-db_user     = "admin"
+db_user     = "postgres"
 db_password = "Admin123"  
