@@ -165,5 +165,7 @@ Kubectl
     ```
 
 4 **Accessing the Application**
-    make port-forward
+   ```
+   make port-forward
+   ```
        
